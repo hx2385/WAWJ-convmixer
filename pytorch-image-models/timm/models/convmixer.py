@@ -22,6 +22,6 @@ def convmixer_1536_20(pretrained=False, **kwargs):
 
 @register_model
 def convmixer_768_32(pretrained=False, **kwargs):
-    model = ConvMixer(768, 32, kernel_size=7, patch_size=7, n_classes=1000)
+    model = ConvMixer(768, 32, kernel_size=7, patch_size=7, n_classes=100)
     model.default_cfg = _cfg
     return model
