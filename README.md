@@ -1,57 +1,24 @@
-# Patches Are All You Need? 🤷
-This repository contains an implementation of ConvMixer for the ICLR 2022 submission ["Patches Are All You Need?"](https://openreview.net/forum?id=TVHS5Y4dNvM) by Asher Trockman and Zico Kolter.
+# Patches Are All You Need? 
+This repository contains a reproduction of ConvMixer for the ICLR 2022 submission ["Patches Are All You Need?"](https://openreview.net/forum?id=TVHS5Y4dNvM) by Haipei Xu and Weixi Huang
 
-🔎 New: Check out [this repository](https://github.com/locuslab/convmixer-cifar10) for training ConvMixers on CIFAR-10.
+## Data
+In this project, we used two Dataset, ImageNet-1K and CIFAR-10》 The former can be downloaded via Huggingface through this [ILSVRC/imagenet-1k](https://huggingface.co/datasets/ILSVRC/imagenet-1k), while the latter will be automatically downloaded by train.py in the CIFAR folder. Due to the computation limitation, we only use the first 100 classes (10%) of the original ImageNet-1K dataset in our experiments.
 
-### Code overview
-The most important code is in `convmixer.py`. We trained ConvMixers using the `timm` framework, which we copied from [here](http://github.com/rwightman/pytorch-image-models).
+## Code overview
+The most important code is in `convmixer.py`, which is implemented by original authors.
 
-__**Update:**__ ConvMixer is now integrated into the [`timm` framework itself](https://github.com/rwightman/pytorch-image-models). You can see the PR [here](https://github.com/rwightman/pytorch-image-models/pull/910).
+## Evaluation
 
-Inside `pytorch-image-models`, we have made the following modifications. (Though one could look at the diff, we think it is convenient to summarize them here.)
-
-- Added ConvMixers
-  - added `timm/models/convmixer.py`
-  - modified `timm/models/__init__.py`
-- Added "OneCycle" LR Schedule
-  - added `timm/scheduler/onecycle_lr.py`
-  - modified `timm/scheduler/scheduler.py`
-  - modified `timm/scheduler/scheduler_factory.py`
-  - modified `timm/scheduler/__init__.py`
-  - modified `train.py` (added two lines to support this LR schedule)
-
-We are confident that the use of the OneCycle schedule here is not critical, and one could likely just as well
-train ConvMixers with the built-in cosine schedule.
-
-### Evaluation
-We provide some model weights below:
-
-| Model Name | Kernel Size | Patch Size | File Size |
-|------------|:-----------:|:----------:|----------:|
-|[ConvMixer-1536/20](https://github.com/tmp-iclr/convmixer/releases/download/v1.0/convmixer_1536_20_ks9_p7.pth.tar)| 9 | 7 | 207MB |
-|[ConvMixer-768/32](https://github.com/tmp-iclr/convmixer/releases/download/v1.0/convmixer_768_32_ks7_p7_relu.pth.tar)\*| 7 | 7 | 85MB |
-|[ConvMixer-1024/20](https://github.com/tmp-iclr/convmixer/releases/download/v1.0/convmixer_1024_20_ks9_p14.pth.tar)| 9 | 14 | 98MB |
-
-\* **Important:** ConvMixer-768/32 here uses ReLU instead of GELU, so you would have to change `convmixer.py` accordingly (we will fix this later).
-
-You can evaluate ConvMixer-1536/20 as follows:
+## Training
+Since we only have one card (T4), so we trained ImageNet-1K as following (The file train.py is located at /CIFAR-10/train.py):
 
 ```
-python validate.py --model convmixer_1536_20 --b 64 --num-classes 1000 --checkpoint [/path/to/convmixer_1536_20_ks9_p7.pth.tar] [/path/to/ImageNet1k-val]
-```
-
-You should get a `81.37%` accuracy.
-
-### Training
-If you had a node with 10 GPUs, you could train a ConvMixer-1536/20 as follows (these are exactly the settings we used):
-
-```
-sh distributed_train.sh 10 [/path/to/ImageNet1k] 
+python train.py [/path/to/ImageNet1k] 
     --train-split [your_train_dir] 
     --val-split [your_val_dir] 
     --model convmixer_1536_20 
-    -b 64 
-    -j 10 
+    -b 32 
+    -j 4 
     --opt adamw 
     --epochs 150 
     --sched onecycle 
@@ -63,21 +30,12 @@ sh distributed_train.sh 10 [/path/to/ImageNet1k]
     --mixup 0.5 
     --reprob 0.25 
     --remode pixel 
-    --num-classes 1000 
+    --num-classes 100 
     --warmup-epochs 0 
     --opt-eps=1e-3 
     --clip-grad 1.0
 ```
 
-We also included a ConvMixer-768/32 in timm/models/convmixer.py (though it is simple to add more ConvMixers). We trained that one with the above settings but with 300 epochs instead of 150 epochs.
+__**Note:**__ While training on `ConvMixer-1536/20`, in order to not cauing `OOM`, we used batch size (-b) of 16 instead.
 
-__**Note:**__ If you are training on CIFAR-10 instead of ImageNet-1k, we recommend setting `--scale 0.75 1.0` as well, since the default value of 0.08 1.0 does not make sense for 32x32 inputs.
 
-The tweetable version of ConvMixer, which requires `from torch.nn import *`:
-
-```
-def ConvMixer(h,d,k,p,n):
- S,C,A=Sequential,Conv2d,lambda x:S(x,GELU(),BatchNorm2d(h))
- R=type('',(S,),{'forward':lambda s,x:s[0](x)+x})
- return S(A(C(3,h,p,p)),*[S(R(A(C(h,h,k,groups=h,padding=k//2))),A(C(h,h,1))) for i in range(d)],AdaptiveAvgPool2d(1),Flatten(),Linear(h,n))
-```
