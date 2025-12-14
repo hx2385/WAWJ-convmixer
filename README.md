@@ -5,9 +5,9 @@ This repository contains a reproduction of ConvMixer for the ICLR 2022 submissio
 In this project, we used two Dataset, ImageNet-1K and CIFAR-10》 The former can be downloaded via Huggingface through this [ILSVRC/imagenet-1k](https://huggingface.co/datasets/ILSVRC/imagenet-1k), while the latter will be automatically downloaded by train.py in the CIFAR folder. Due to the computation limitation, we only use the first 100 classes (10%) of the original ImageNet-1K dataset in our experiments.
 
 ## Code overview
-The most important code is in `convmixer.py`, which is implemented by original authors.
+The most important code is in `convmixer.py`, which is implemented by original authors. The `/CIFAR-10` directory contains files used for training and plotting results on the CIFAR-10 dataset. The `/ImageNet` directory includes scripts for training, figure generation, as well as training arguments and evaluation results on ImageNet-1K.
+The `/pytorch-image-models` directory contains the source code implemented by the original author. 
 
-## Evaluation
 
 ## Training
 Since we only have one card (T4), so we trained ImageNet-1K as following (The file train.py is located at /CIFAR-10/train.py):
@@ -36,6 +36,6 @@ python train.py [/path/to/ImageNet1k]
     --clip-grad 1.0
 ```
 
-__**Note:**__ While training on `ConvMixer-1536/20`, in order to not cauing `OOM`, we used batch size (-b) of 16 instead.
+__**Note:**__ While training on `ConvMixer-1536/20`, in order to not causing `OOM`, we used batch size (-b) of 16 instead.
 
 
