@@ -38,4 +38,52 @@ python train.py [/path/to/ImageNet1k]
 
 __**Note:**__ While training on `ConvMixer-1536/20`, in order to not causing `OOM`, we used batch size (-b) of 16 instead.
 
+## Organization of this directory
+
+```   
+e4040-2025fall-assign3-hx2385
+├── Assignment3-intro.ipynb
+├── README.md
+├── figures
+│   ├── README.md
+│   ├── hx2385_gcp_work_example_screenshot_1.png
+│   ├── hx2385_gcp_work_example_screenshot_2.png
+│   └── hx2385_gcp_work_example_screenshot_3.png
+├── img
+│   ├── bptt.png
+│   ├── bptt2.jpg
+│   ├── charrnn.jpg
+│   ├── doubleLSTM.png
+│   ├── embedding.png
+│   ├── lookback.png
+│   ├── lstm_cell.png
+│   ├── prediction.png
+│   ├── seq2seq-inference.png
+│   ├── seq2seq-teacher-forcing.png
+│   ├── seq2seq.jpg
+│   ├── singleLSTM.png
+│   ├── tsne_female_male.png
+│   ├── xnor.png
+│   └── xor.png
+├── requirements.txt
+├── stock_data
+│   └── Microsoft_Stock.csv
+├── task1-xor.ipynb
+├── task2-rnn-forecasting.ipynb
+├── task3-rnn-translation.ipynb
+├── text_data
+│   ├── eng_vocab.txt
+│   ├── nl_vocab.txt
+│   ├── nmt_eng.npy
+│   └── nmt_nl.npy
+└── utils
+    ├── LSTM.py
+    ├── dataset.py
+    └── translation
+        ├── layers.py
+        ├── text_data.py
+        └── train_funcs.py
+
+6 directories, 35 files
+```
 
