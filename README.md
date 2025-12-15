@@ -44,49 +44,48 @@ __**Note:**__ While training on `ConvMixer-1536/20`, in order to not causing `OO
 ## Organization of this directory
 
 ```   
-e4040-2025fall-assign3-hx2385
-├── Assignment3-intro.ipynb
+WAWJ-convmixer
+├── convmixer.py
+├── Demo.ipynb
+├── E4040.2025Fall.WAWJ.report.hx2385.wh2610.pdf
+├── LICENSE
 ├── README.md
-├── figures
-│   ├── README.md
-│   ├── hx2385_gcp_work_example_screenshot_1.png
-│   ├── hx2385_gcp_work_example_screenshot_2.png
-│   └── hx2385_gcp_work_example_screenshot_3.png
-├── img
-│   ├── bptt.png
-│   ├── bptt2.jpg
-│   ├── charrnn.jpg
-│   ├── doubleLSTM.png
-│   ├── embedding.png
-│   ├── lookback.png
-│   ├── lstm_cell.png
-│   ├── prediction.png
-│   ├── seq2seq-inference.png
-│   ├── seq2seq-teacher-forcing.png
-│   ├── seq2seq.jpg
-│   ├── singleLSTM.png
-│   ├── tsne_female_male.png
-│   ├── xnor.png
-│   └── xor.png
-├── requirements.txt
-├── stock_data
-│   └── Microsoft_Stock.csv
-├── task1-xor.ipynb
-├── task2-rnn-forecasting.ipynb
-├── task3-rnn-translation.ipynb
-├── text_data
-│   ├── eng_vocab.txt
-│   ├── nl_vocab.txt
-│   ├── nmt_eng.npy
-│   └── nmt_nl.npy
-└── utils
-    ├── LSTM.py
-    ├── dataset.py
-    └── translation
-        ├── layers.py
-        ├── text_data.py
-        └── train_funcs.py
+├── CIFAR-10
+│   ├── Hyperparameter tuning.ipynb
+│   ├── README.md
+│   ├── run_CIFAR.ipynb
+│   ├── train.py
+│   └── figures
+│       ├── convmixer_ks_ps_comparison.png
+│       ├── test_acc_compare.png
+│       ├── time_per_epoch_compare.png
+│       └── train_acc_compare.png
+├── Figures
+│   ├── WAWJ_gcp_work_example_screenshot_1.png
+│   ├── WAWJ_gcp_work_example_screenshot_2.png
+│   └── WAWJ_gcp_work_example_screenshot_3.png
+├── ImageNet
+│   ├── Convmix_plot_ImageNet.ipynb
+│   ├── Convmix_plot_ImageNet_768_32.ipynb
+│   ├── get-training.ipynb
+│   ├── ImageNet_val_first100.ipynb
+│   ├── README.md
+│   ├── Requirements.txt
+│   ├── .ipynb_checkpoints
+│   │   └── Validation_ImageNet-checkpoint.ipynb
+│   ├── figures
+│   │   ├── convmixer_1536_20.png
+│   │   └── convmixer_768_32.png
+│   └── Models
+│       ├── ConvMixer-1536-20
+│       │   ├── args.yaml
+│       │   └── summary.csv
+│       └── ConvMixer-768-32
+│           ├── args.yaml
+│           └── summary.csv
+└── pytorch-image-models
+    └── (third-party library; omitted)
 
-6 directories, 35 files
+10 directories, 29 files
 ```
 
