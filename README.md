@@ -19,7 +19,7 @@ Since we only have one card (T4), so we trained ImageNet-1K as following (The fi
 python train.py [/path/to/ImageNet1k] 
     --train-split [your_train_dir] 
     --val-split [your_val_dir] 
-    --model convmixer_1536_20 
+    --model convmixer_768_32 
     -b 32 
     -j 4 
     --opt adamw 
