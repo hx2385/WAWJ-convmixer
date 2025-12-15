@@ -8,6 +8,9 @@ In this project, we used two Dataset, ImageNet-1K and CIFAR-10》 The former can
 The most important code is in `convmixer.py`, which is implemented by original authors. The `/CIFAR-10` directory contains files used for training and plotting results on the CIFAR-10 dataset. The `/ImageNet` directory includes scripts for training, figure generation, as well as training arguments and evaluation results on ImageNet-1K.
 The `/pytorch-image-models` directory contains the source code implemented by the original author. 
 
+For illustration purposes, we include a `demo.ipynb` notebook demonstrating how to train a ConvMixer model on the CIFAR-10 dataset.
+
+
 
 ## Training
 Since we only have one card (T4), so we trained ImageNet-1K as following (The file train.py is located at /CIFAR-10/train.py):
